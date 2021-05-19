@@ -1,21 +1,101 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <home-swiper :banners="banners"></home-swiper>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view></feature-view>
-    <tab-control class="tab-control" :titles="['流行', '新款', '精选']" @tabclick="tabClick"></tab-control>
-    <!-- <goods-list :goods="showGoods"></goods-list> -->
-    <div>
-      <h2>请求接口无数据</h2>
-      <h2>请求接口无数据</h2>
-      <h2>请求接口无数据</h2>
-      <h2>请求接口无数据</h2>
-      <h2>请求接口无数据</h2>
-      <h2>请求接口无数据</h2>
-      <h2>请求接口无数据</h2>
-      <h2>请求接口无数据</h2>
-    </div>
+    <scroll class="content" ref="scroll">
+      <home-swiper :banners="banners"></home-swiper>
+      <recommend-view :recommends="recommends"></recommend-view>
+      <feature-view></feature-view>
+      <tab-control class="tab-control" :titles="['流行', '新款', '精选']" @tabclick="tabClick"></tab-control>
+      <!-- <goods-list :goods="showGoods"></goods-list> -->
+      <div>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+        <h2>请求接口无数据</h2>
+      </div>
+      
+    </scroll>
+    <back-top @click.native="backClick"></back-top>
   </div>
 </template>
 
@@ -31,7 +111,8 @@ import FeatureView from './childComps/FeatureView'
 import NavBar from '../../components/common/navbar/NavBar'
 import TabControl from '../../components/content/tabControl/TabControl'
 // import GoodsList from '../../components/content/goods/GoodsList'
-
+import Scroll from '../../components/common/scroll/Scroll'
+import BackTop from '../../components/content/backTop/BackTop'
 
 
 export default ({
@@ -60,6 +141,8 @@ export default ({
     FeatureView,
     TabControl,
     // GoodsList
+    Scroll,
+    BackTop
   },
   created() {
     // 请求多个数据
@@ -99,7 +182,10 @@ export default ({
     //     this.goods[type].list.push(...res.data.list)
     //     this.goods[type].page += 1
     //   })
-    // }
+    // },
+    backClick() {
+      this.$refs.scroll.scrollTo(0, 0)
+    }
   }
 })
 </script>
@@ -107,20 +193,21 @@ export default ({
 <style scoped>
   #home {
     padding-top: 44px;
+    height: 100vh;
+    position: relative;
   }
   .home-nav {
-    background-color: var(--color-tint);
+    background: var(--color-tint);
     color: #fff;
+
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
-    background-color: #fff;
-    z-index: 10000000;
-  }
-  .tab-control {
-    position: sticky;
-    top: 44px;
     z-index: 9;
   }
+  .content{
+    height: 100px;
+  }
+
 </style>
