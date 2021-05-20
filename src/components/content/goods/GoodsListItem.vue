@@ -1,6 +1,6 @@
-<!-- <template>
+<template>
   <div class="goods-iem">
-    <img :src="goodsItem.show.img" alt="">
+    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -18,6 +18,12 @@
         default() {
           return {}
         }
+      }
+    },
+    methods: {
+      // 图片加载完成，better-scroll重新计算高度
+      imageLoad() {
+        this.$bus.$emit('itemImageLoad')
       }
     }
   }
@@ -71,4 +77,4 @@
         height: 14px;
         background: url("../../../assets/img/common/collect.svg") 0 0/14px 14px;
     }
-</style> -->
+</style>

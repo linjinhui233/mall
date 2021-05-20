@@ -1,11 +1,26 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <scroll class="content" ref="scroll">
-      <home-swiper :banners="banners"></home-swiper>
+    <tab-control class="tab-control" 
+                   :titles="['流行', '新款', '精选']" 
+                   @tabClick="tabClick"
+                   ref="tabControl1"
+                   v-show="isTabFixed"
+                   :class="{fixed: isTabFixed}"></tab-control>
+    <scroll class="content" 
+            ref="scroll" 
+            :probe-type="3" 
+            @scroll="contentScroll"
+            :pull-up-load="true"
+            @pullingUp="loadMore"> 
+      <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
-      <tab-control class="tab-control" :titles="['流行', '新款', '精选']" @tabclick="tabClick"></tab-control>
+      <tab-control class="tab-control" 
+                   :titles="['流行', '新款', '精选']" 
+                   @tabClick="tabClick"
+                   ref="tabControl2"
+                   v-show="!isTabFixed"></tab-control>
       <!-- <goods-list :goods="showGoods"></goods-list> -->
       <div>
         <h2>请求接口无数据</h2>
@@ -95,7 +110,7 @@
       </div>
       
     </scroll>
-    <back-top @click.native="backClick"></back-top>
+    <back-top @click.native="backClick" v-show="isShow"></back-top>
   </div>
 </template>
 
@@ -123,11 +138,22 @@ export default ({
       recommends: [],
       goods: {
         'pop': {page: 0, list: []},
-        'news': {page: 0, list: []},
+        'new': {page: 0, list: []},
         'sell': {page: 0, list: []}
       },
-      currentType: 'pop'
+      currentType: 'pop',
+      isShow: false,
+      tabOffsetTop: 0,
+      isTabFixed: false,
+      saveY: 0
     }
+  },
+  activated() {
+    this.$refs.scroll.scrollTo(0, this.saveY, 0)
+    this.$refs.scroll.refresh()
+  },
+  deactivated() {
+    this.saveY = this.$refs.scroll.getScrollY()
   },
   // computed: {
   //   showGoods() {
@@ -149,8 +175,15 @@ export default ({
     this.getHomeMultidata()
 
     // 请求商品数据
-    // this.getHomeGoods()
-
+    // this.getHomeGoods('pop')
+    // this.getHomeGoods('new')
+    // this.getHomeGoods('sell')
+  },
+  mounted() {
+     // 监听item中图片加载完成
+     this.$bus.$on('itemImageLoad', () => {
+      this.$refs.scroll.refresh()
+    })
   },
   methods: {
     // 事件监听
@@ -160,12 +193,14 @@ export default ({
           this.currentType = 'pop'
           break
         case 1:
-          this.currentType = 'news'
+          this.currentType = 'new'
           break
         case 2:
           this.currentType = 'sell'
           break
       }
+      this.$refs.tabControl1.currentIndex = index
+      this.$refs.tabControl2.currentIndex = index
     },
 
     // 网络请求
@@ -181,10 +216,29 @@ export default ({
     //   getHomeGoods(type, page).then(res => {
     //     this.goods[type].list.push(...res.data.list)
     //     this.goods[type].page += 1
+    //   this.$refs.scroll.finishPullUp()
     //   })
     // },
     backClick() {
       this.$refs.scroll.scrollTo(0, 0)
+    },
+    contentScroll(position) {
+      // BackTop显示
+      this.isShow = position.y < -1000 
+
+      // tabControl吸附
+      this.isTabFixed = (-position.y + 40) > this.tabOffsetTop
+      
+    },
+    loadMore() {
+      console.log('加载更多')
+      // this.getHomeGoods(this.currentType)
+      this.$refs.scroll.refresh()
+    },
+    swiperImageLoad() {
+      // console.log(this.$refs.tabControl.$el.offsetTop)
+      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
+      
     }
   }
 })
@@ -194,7 +248,7 @@ export default ({
   #home {
     padding-top: 44px;
     height: 100vh;
-    position: relative;
+    
   }
   .home-nav {
     background: var(--color-tint);
@@ -207,7 +261,14 @@ export default ({
     z-index: 9;
   }
   .content{
-    height: 100px;
+    height: calc(100% - 49px);
   }
-
+  .fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 44px;
+    background-color: #fff;
+    z-index: 100;
+  }
 </style>
